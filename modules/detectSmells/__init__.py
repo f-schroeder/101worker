@@ -33,7 +33,7 @@ def update_file(context, f):
             
             #convert xml to json
             xml = fromstring(cmdResult)
-            jsonText = json.dumps(xmljson.badgerfish.data(xml))
+            jsonText = xmljson.badgerfish.data(xml)
             '{"p": {"@id": 1, "$": "text"}}'
             #xmljson.parker.etree({'ul': {'li': [1, 2]}})
             print("Finished detection of " + f)
