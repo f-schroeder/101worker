@@ -37,6 +37,7 @@ pip3 install jinja2
 pip3 install pymongo
 pip3 install inflection
 pip3 install networkx
+pip3 install xmljson
 goto :end
 
 :download

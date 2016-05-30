@@ -11,6 +11,7 @@ modules = [
     'pull',
     'matchLanguage',
     'extractFacts',
+	'detectSmells',
     'dumpMongoDBToJson',
     'convertMongoDump',
     'packageFrequency',
