@@ -28,7 +28,7 @@ def update_file(context, f):
             dataPath = rootDir + "101results" + os.sep + "101repo" + os.sep + f
             
 			#check smells for source-files
-            command = "java -jar " + dir + os.sep + "checkstyle.jar -c " + dir + os.sep + "checkstyle_checks.xml " + dataPath + " -f xml"
+            command = "java -jar " + dir + os.sep + "checkstyle.jar -c " + dir + os.sep + "checkstyle_checks_sun.xml " + dataPath + " -f xml"
             cmdResult = subprocess.check_output(command, shell=True)
             
             #convert xml to json
