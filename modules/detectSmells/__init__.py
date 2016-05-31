@@ -11,9 +11,12 @@ config = {
 }
 
 def update_file(context, f):
-    # reads the content of the file (primary resource)
+
+    #sets the used styleguide for smell-detection (can be 'sun' or 'google')
+    styleguide = "sun" #"google"
+
+    #reads the content of the file (primary resource)
     try:
-        #source = context.get_primary_resource(f)
         if f.endswith(".java"):
         
             #----
@@ -28,7 +31,7 @@ def update_file(context, f):
             dataPath = rootDir + "101results" + os.sep + "101repo" + os.sep + f
             
 			#check smells for source-files
-            command = "java -jar " + dir + os.sep + "checkstyle.jar -c " + dir + os.sep + "checkstyle_checks_sun.xml " + dataPath + " -f xml"
+            command = "java -jar " + dir + os.sep + "checkstyle.jar -c " + dir + os.sep + "checkstyle_checks_" + styleguide + ".xml " + dataPath + " -f xml"
             cmdResult = subprocess.check_output(command, shell=True)
             
             #convert xml to json
