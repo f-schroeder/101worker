@@ -7,7 +7,10 @@ from xml.etree.ElementTree import fromstring, tostring
 config = {
     'wantdiff': True,
     'wantsfiles': True,
-    'threadsafe': True
+    'threadsafe': True,
+    'behavior': {
+        'creates': [['resource', 'smell']]
+    }
 }
 
 def update_file(context, f):
