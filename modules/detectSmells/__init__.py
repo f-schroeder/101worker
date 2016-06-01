@@ -25,6 +25,7 @@ def update_file(context, f):
             #----
             #get required paths
             dir = os.path.dirname(__file__)
+
             #subdir = "101worker" + os.sep + "modules" + os.sep + "detectSmells"
             #if not dir.endswith(subdir):
             #    print("Error: Path is false!")
@@ -32,8 +33,10 @@ def update_file(context, f):
             #path concatination
             #rootDir=dir[:-len(subdir)]
             #dataPath = rootDir + "101results" + os.sep + "101repo" + os.sep + f
+
             dataPath = os.path.join(context.get_env("repo101dir"), f)
-			#check smells for source-files
+
+            #check smells for source-files
             command = "java -jar " + dir + os.sep + "checkstyle.jar -c " + dir + os.sep + "checkstyle_checks_" + styleguide + ".xml " + dataPath + " -f xml"
             cmdResult = subprocess.check_output(command, shell=True)
             
@@ -81,7 +84,7 @@ class DetectSmellsTest(unittest.TestCase):
         }
         run(self.env, change)
         #assert string mit samplefile
-    self.env.write_derived_resource.assert_called_with(dir + 'some-file.py', 4, 'loc')
+        self.env.write_derived_resource.assert_called_with(dir + 'some-file.py', 4, 'loc')
 
 
 def test_run_removed(self):
@@ -89,7 +92,7 @@ def test_run_removed(self):
         'type': '',
             'file': 'some-file.java'
         }
-        run(self.env, change)
+    run(self.env, change)
         
     self.env.remove_derived_resource.assert_called_with('some-file.java', 'smell')
 
