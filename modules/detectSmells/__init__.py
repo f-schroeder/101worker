@@ -20,23 +20,12 @@ def update_file(context, f):
 
     #reads the content of the file (primary resource)
     try:
+        #only extract smells for java-files
         if f.endswith(".java"):
         
             #----
             #get required paths
             dir = os.path.dirname(__file__)
-
-            subdir = "101worker" + os.sep + "modules" + os.sep + "detectSmells"
-            if not dir.endswith(subdir):
-                print("Error: Path is false!")
-                
-            #path concatination
-            rootDir=dir[:-len(subdir)]
-            #dataPath = rootDir + "101results" + os.sep + "101repo" + os.sep + f
-            
-            #print(type(f))
-            #print(type(context.get_env("repo101dir")))
-
             dataPath = os.path.join(context.get_env("repo101dir"), f)
 
             #check smells for source-files
@@ -49,8 +38,8 @@ def update_file(context, f):
             jsonText["checkstyle"]["file"]["@name"] = f
             jsonText = json.dumps(jsonText)
             jsonText = json.loads(jsonText)
-            #xmljson.parker.etree({'ul': {'li': [1, 2]}})
-            print("Finished detection of " + f)
+
+            print("Finished smell detection of " + f)
             #----
         	
             context.write_derived_resource(f, jsonText, 'smell')
@@ -81,7 +70,6 @@ class DetectSmellsTest(unittest.TestCase):
     
     def setUp(self):
         self.env = Mock()
-        #pfad zum richtigen file setzen
         self.env.get_env.return_value = os.path.dirname(__file__)
     
     def test_run(self):
@@ -90,9 +78,10 @@ class DetectSmellsTest(unittest.TestCase):
             'file': 'Cut.java'
         }
         run(self.env, change)
-        #assert string mit samplefile
+
+        #assert string with samplefile
         expectedString = json.loads('{"checkstyle": {"@version": 6.18, "file": {"@name": "Cut.java", "error": [{"@line": 0, "@source": "com.puppycrawl.tools.checkstyle.checks.NewlineAtEndOfFileCheck", "@message": "File does not end with a newline.", "@severity": "warning"}, {"@line": 0, "@source": "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck", "@message": "Missing package-info.java file.", "@severity": "warning"}, {"@line": 5, "@source": "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTypeCheck", "@message": "Missing a Javadoc comment.", "@severity": "warning"}, {"@line": 5, "@source": "com.puppycrawl.tools.checkstyle.checks.design.HideUtilityClassConstructorCheck", "@column": 1, "@message": "Utility classes should not have a public or default constructor.", "@severity": "warning"}, {"@line": 7, "@source": "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck", "@column": 5, "@message": "Missing a Javadoc comment.", "@severity": "warning"}, {"@line": 7, "@source": "com.puppycrawl.tools.checkstyle.checks.FinalParametersCheck", "@column": 28, "@message": "Parameter c should be final.", "@severity": "warning"}]}}}')
-        #smellCount = len(jsontext['checkstyle']['file']['error'])
+
         self.env.write_derived_resource.assert_called_with('Cut.java', expectedString, "smell")
 
 
