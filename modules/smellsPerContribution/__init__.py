@@ -9,4 +9,4 @@ config = {
 }
 
 from .program import run
-#from .test import test
+from .test import test

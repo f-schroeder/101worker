@@ -15,6 +15,7 @@ def run(env, res):
             if data.get(contribution, None) is None:
                 data[contribution] = 0
 
+            #count smells for every java contribution
             jsontext = env.get_derived_resource(f, 'smell')
             smellCount = len(jsontext['checkstyle']['file']['error'])
 
