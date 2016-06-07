@@ -156,6 +156,7 @@ Felix: Basic Setup of Smell-Detection, smellsPerContribution-Module
 ### detectSmells
 
 The detectSmells module searches for smells in every Java file separately. We use the static code analysis tool Checkstyle for checking if Java source code compiles with coding rules.
+
 It's able to change the styleguid from 'sun' (default) to 'google'.
 ```bash
 styleguide = "sun" #"google"
