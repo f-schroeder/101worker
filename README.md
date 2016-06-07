@@ -1,15 +1,15 @@
 
 # Work Distribution
 
-Darius: Basic Setup of Smell-Detection
+Darius (dath): Basic Setup of Smell-Detection
 
-Martin: Expand Smell-Detection to 101conpany-Files
+Martin (martins): Expand Smell-Detection to 101conpany-Files
 
-Sophia: Tests
+Sophia (skramer): Tests
 
-Nikolas: Wiki, Readme
+Nikolas (nwitt): Wiki, Readme
 
-Felix: Basic Setup of Smell-Detection, smellsPerContribution-Module
+Felix (fschroeder): Basic Setup of Smell-Detection, smellsPerContribution-Module
 
 Please note that there aren't commits by every team-member in this GitHub-repostitory, because we switched from GitLab to GitHub during development. To see all commits, please also refer to the corresponding GitLab-repository: https://gitlab.uni-koblenz.de/licor42/assignment2 (no longer up-to-date)
 
