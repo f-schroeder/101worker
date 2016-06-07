@@ -155,23 +155,22 @@ Felix: Basic Setup of Smell-Detection, smellsPerContribution-Module
 
 ### detectSmells
 
-The detectSmells module searches for smells in every Java file separately. We use the static code analysis tool Checkstyle for checking if Java source code compiles with coding rules.
+The detectSmells module searches for smells in every Java file separately.
 
-It's able to change the styleguid from 'sun' (default) to 'google'.
+It's able to change the styleguide from 'sun' (default) to 'google'.
 ```bash
 styleguide = "sun" #"google"
 ```
 
-The input isa xml file for smell configuration
-The output is a  smell file for each Java source file.
-
+We use the static code analysis tool Checkstyle for checking if Java source code compiles with coding rules.
 ```bash
 command = "java -jar " + dir + os.sep + "checkstyle.jar -c " + dir + os.sep + 
           "checkstyle_checks_" + styleguide + ".xml " + dataPath + " -f xml"
 cmdResult = subprocess.check_output(command, shell=True)
 ```
 
-The generated xml file gets converted into a json file.
+The input isa xml file for smell configuration
+The output is a  smell file for each Java source file.
 ```bash
 xml = fromstring(cmdResult)
 jsonText = xmljson.badgerfish.data(xml)
@@ -185,7 +184,6 @@ jsonText = json.loads(jsonText)
 This module counts all detected smells from all files.
 
 The output is a smellsPerContribution dump file.
-
 ```bash
 jsontext = env.get_derived_resource(f, 'smell')
 smellCount = len(jsontext['checkstyle']['file']['error'])
