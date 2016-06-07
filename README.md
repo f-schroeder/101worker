@@ -1,3 +1,68 @@
+
+# Work Distribution
+
+Darius: Basic Setup of Smell-Detection
+
+Martin: Expand Smell-Detection to 101conpany-Files
+
+Sophia: Tests
+
+Nikolas: Wiki, Readme
+
+Felix: Basic Setup of Smell-Detection, smellsPerContribution-Module
+
+Please note that there aren't commits by every team-member in this GitHub-repostitory, because we switched from GitLab to GitHub during development. To see all commits, please also refer to the corresponding GitLab-repository: https://gitlab.uni-koblenz.de/licor42/assignment2 (no longer up-to-date)
+
+
+# Usage
+
+1. Set up 101worker as usual
+2. Run our own ```make install-pip-pkgs``` to install extra Python Libraries (xmljson)
+3. Java has to be installed and it must be possible to run Java in the console
+4. Use ```cd 101worker``` to change directory and run ```python bin/run_module detectSmells``` and ```python bin/run_module smellsPerConrtibution```
+
+
+# Charactersitics
+
+### detectSmells
+
+The detectSmells module searches for smells in every Java file separately.
+
+It's able to change the styleguide from 'sun' (default) to 'google'.
+```bash
+styleguide = "sun" #"google"
+```
+
+We use the static code analysis tool Checkstyle for checking if Java source code compiles with coding rules.
+```bash
+command = "java -jar " + dir + os.sep + "checkstyle.jar -c " + dir + os.sep + 
+          "checkstyle_checks_" + styleguide + ".xml " + dataPath + " -f xml"
+cmdResult = subprocess.check_output(command, shell=True)
+```
+
+The input is a xml file for smell configuration
+The output is a smell file for each Java source file.
+```bash
+xml = fromstring(cmdResult)
+jsonText = xmljson.badgerfish.data(xml)
+jsonText["checkstyle"]["file"]["@name"] = f
+jsonText = json.dumps(jsonText)
+jsonText = json.loads(jsonText)
+```
+
+### smellsPerContribution
+
+This module counts all detected smells for every contribution.
+
+```bash
+jsontext = env.get_derived_resource(f, 'smell')
+smellCount = len(jsontext['checkstyle']['file']['error'])
+data[contribution] += smellCount
+```
+
+The output is the smellsPerContribution.json dump file.
+
+
 # Installation
 
 It is advised to familiar yourself with the basic concepts of 101worker
@@ -129,63 +194,3 @@ def test():
 
 Refer to simpleLoc for an example. Testing the run function requires some kind of mocking usually, refer to the [python documentation](https://docs.python.org/3/library/unittest.mock.html) for further details. Note that you should make sure that the necessary functions are called with the correct parameters, use [assert_called_with](https://docs.python.org/3/library/unittest.mock.html#unittest.mock.Mock.assert_called_with).
 
-
-# Work Distribution
-
-Darius: Basic Setup of Smell-Detection
-
-Martin: Expand Smell-Detection to 101conpany-Files
-
-Sophia: Tests
-
-Nikolas: Wiki, Readme
-
-Felix: Basic Setup of Smell-Detection, smellsPerContribution-Module
-
-
-# Usage
-
-1. Set up 101worker as usual
-2. Run own ```make install-pip-pkgs``` to install extra Python Libraries (xmljson)
-3. Java has to be installed and it must be possible to run Java in the console
-4. Use ```cd 101worker``` to change directory and run ```python bin/run_module detectSmells``` and ```python bin/run_module smellsPerConrtibution```
-
-
-# Charactersitics
-
-### detectSmells
-
-The detectSmells module searches for smells in every Java file separately.
-
-It's able to change the styleguide from 'sun' (default) to 'google'.
-```bash
-styleguide = "sun" #"google"
-```
-
-We use the static code analysis tool Checkstyle for checking if Java source code compiles with coding rules.
-```bash
-command = "java -jar " + dir + os.sep + "checkstyle.jar -c " + dir + os.sep + 
-          "checkstyle_checks_" + styleguide + ".xml " + dataPath + " -f xml"
-cmdResult = subprocess.check_output(command, shell=True)
-```
-
-The input isa xml file for smell configuration
-The output is a  smell file for each Java source file.
-```bash
-xml = fromstring(cmdResult)
-jsonText = xmljson.badgerfish.data(xml)
-jsonText["checkstyle"]["file"]["@name"] = f
-jsonText = json.dumps(jsonText)
-jsonText = json.loads(jsonText)
-```
-
-### smellsPerContribution
-
-This module counts all detected smells from all files.
-
-The output is a smellsPerContribution dump file.
-```bash
-jsontext = env.get_derived_resource(f, 'smell')
-smellCount = len(jsontext['checkstyle']['file']['error'])
-data[contribution] += smellCount
-```
