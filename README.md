@@ -33,7 +33,7 @@ It's able to change the styleguide from 'sun' (default) to 'google'.
 styleguide = "sun" #"google"
 ```
 
-We use the static code analysis tool Checkstyle for checking if Java source code compiles with coding rules.
+We use the static code analysis tool [Checkstyle](http://checkstyle.sourceforge.net "Checkstyle Website") for checking if Java source code compiles with coding rules.
 ```bash
 command = "java -jar " + dir + os.sep + "checkstyle.jar -c " + dir + os.sep + 
           "checkstyle_checks_" + styleguide + ".xml " + dataPath + " -f xml"
